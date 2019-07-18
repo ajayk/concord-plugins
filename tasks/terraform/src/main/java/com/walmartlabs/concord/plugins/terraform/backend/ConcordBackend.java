@@ -87,7 +87,7 @@ public class ConcordBackend implements Backend {
         }
 
         if (debug) {
-            log.info("init -> created backend configuration file in {}", p.toAbsolutePath().toString());
+            log.info("init -> created backend configuration file in {}", p.toAbsolutePath());
         }
     }
 

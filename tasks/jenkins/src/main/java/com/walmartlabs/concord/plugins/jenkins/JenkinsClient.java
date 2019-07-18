@@ -149,10 +149,10 @@ public class JenkinsClient {
         String p = path;
 
         if (!p.contains("?")) {
-            p = Utils.normalizeUrl(p) + "/api/json";
+            p = Utils.normalizeUrl(p).concat("/api/json");
         } else {
             final String[] components = p.split("\\?", 2);
-            p = Utils.normalizeUrl(components[0]) + "/api/json" + "?" + components[1];
+            p = Utils.normalizeUrl(components[0]).concat("/api/json").concat("?").concat(components[1]);
         }
         return p.replace(" ", "%20");
     }

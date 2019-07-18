@@ -95,7 +95,7 @@ public class GitSshWrapper {
                 throw new IllegalArgumentException("The private key must be an absolute path, got: " + p);
             }
 
-            if (!Files.exists(p)) {
+            if (!p.toFile().exists()) {
                 throw new IllegalStateException("The private key file doesn't exist: " + p);
             }
 

@@ -29,11 +29,11 @@ public final class Utils {
     public static Path assertDir(Path workDir, String path) throws IOException {
         Path p = workDir.resolve(path);
 
-        if (Files.isDirectory(p)) {
+        if (p.toFile().isDirectory()) {
             return p;
         }
 
-        if (Files.exists(p)) {
+        if (p.toFile().exists()) {
             throw new IllegalStateException("'" + path + "' is not a directory");
         }
 

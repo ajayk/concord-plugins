@@ -254,7 +254,7 @@ public class LdapTask implements Task {
         String bindUserDn = getString(defaults, ctx, LDAP_BIND_USER_DN, null);
         String bindPassword = getString(defaults, ctx, LDAP_BIND_PASSWORD, null);
 
-        Hashtable<String, Object> env = new Hashtable<String, Object>();
+        Hashtable<String, Object> env = new Hashtable<>();
         env.put(javax.naming.Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(javax.naming.Context.PROVIDER_URL, ldapAdServer);
         env.put(javax.naming.Context.SECURITY_AUTHENTICATION, "simple");
@@ -272,7 +272,7 @@ public class LdapTask implements Task {
     private static String getAttrValue(SearchResult result, String id) {
         NamingEnumeration<String> values = getAttrValues(result, id);
 
-        if (values.hasMoreElements()) {
+        if (values != null && values.hasMoreElements()) {
             return values.nextElement();
         }
 

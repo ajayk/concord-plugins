@@ -124,6 +124,10 @@ public class TerraformTask implements Task {
     private Backend getBackend(Map<String, Object> cfg) {
         boolean debug = MapUtils.get(cfg, Constants.DEBUG_KEY, false, Boolean.class);
         String s = MapUtils.getString(cfg, Constants.BACKEND_KEY, DEFAULT_BACKEND);
+        return getBackend(debug, s);
+    }
+
+    private Backend getBackend(boolean debug, String s) {
         switch (s) {
             case "none": {
                 return new DummyBackend();

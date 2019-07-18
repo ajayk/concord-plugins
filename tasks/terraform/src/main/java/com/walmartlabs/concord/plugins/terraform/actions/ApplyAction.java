@@ -28,7 +28,6 @@ import com.walmartlabs.concord.plugins.terraform.commands.ApplyCommand;
 import com.walmartlabs.concord.sdk.Context;
 import com.walmartlabs.concord.sdk.MapUtils;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -77,7 +76,7 @@ public class ApplyAction extends Action {
             Path dirOrPlanAbsolute = workDir.resolve(dirOrPlan);
 
             Path varsFile = null;
-            if (Files.isDirectory(dirOrPlanAbsolute)) {
+            if (dirOrPlanAbsolute.toFile().isDirectory()) {
                 // running without a previously created plan file
                 varsFile = createVarsFile(workDir, objectMapper, extraVars);
             }

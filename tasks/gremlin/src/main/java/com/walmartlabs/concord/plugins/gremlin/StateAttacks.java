@@ -54,17 +54,16 @@ public class StateAttacks {
     private static final String ATTACK_LENGTH = "length";
     private static final String ATTACK_GUID = "attackGuid";
     private static final String ATTACK_DETAILS = "attackDetails";
+    private static final String EXACT = "Exact";
 
     public void shutdown(Context ctx, String apiUrl, String appUrl) {
         int delay = getInt(ctx, ATTACK_SHUTDOWN_DELAY, 1);
         boolean reboot = getBoolean(ctx, ATTACK_SHUTDOWN_REBOOT, true);
-        String targetType = getString(ctx, ATTACK_TARGET_TYPE, "Exact");
+        String targetType = getString(ctx, ATTACK_TARGET_TYPE, EXACT);
 
-        List<String> args;
+        List<String>  args = new ArrayList<>(Arrays.asList("-d", Integer.toString(delay)));
         if (reboot) {
-            args = new ArrayList<>(Arrays.asList("-d", Integer.toString(delay), "--reboot"));
-        } else {
-            args = new ArrayList<>(Arrays.asList("-d", Integer.toString(delay)));
+            args.add("--reboot");
         }
 
         Map<String, Object> objAttack = Collections.singletonMap("type", "shutdown");
@@ -73,14 +72,19 @@ public class StateAttacks {
         String attackGuid = creatAttack(ctx, objAttack, objArgs, targetType, apiUrl);
         String attackDetails = getAttackDetails(ctx, apiUrl, attackGuid);
         ctx.setVariable(ATTACK_DETAILS, attackDetails);
-        log.info("URL of Gremlin Attack report: " + appUrl + ctx.getVariable(ATTACK_GUID));
+        String gremlinAttackReport  = getGremlinAttackReportUrl(ctx, appUrl);
+        log.info("URL of Gremlin Attack report: {} " , gremlinAttackReport);
+    }
+
+    private String getGremlinAttackReportUrl(Context ctx, String appUrl) {
+        return appUrl.concat(ctx.getVariable(ATTACK_GUID).toString());
     }
 
     public void timeTravel(Context ctx, String apiUrl, String appUrl) {
         int length = assertInt(ctx, ATTACK_LENGTH);
         int offset = getInt(ctx, ATTACK_TIME_TRAVEL_OFFSET, 5);
         boolean ntp = getBoolean(ctx, ATTACK_TIME_TRAVEL_NTP, false);
-        String targetType = getString(ctx, ATTACK_TARGET_TYPE, "Exact");
+        String targetType = getString(ctx, ATTACK_TARGET_TYPE, EXACT);
 
         List<String> args;
         if (ntp) {
@@ -95,7 +99,7 @@ public class StateAttacks {
         String attackGuid = creatAttack(ctx, objAttack, objArgs, targetType, apiUrl);
         String attackDetails = getAttackDetails(ctx, apiUrl, attackGuid);
         ctx.setVariable(ATTACK_DETAILS, attackDetails);
-        log.info("URL of Gremlin Attack report: " + appUrl + ctx.getVariable(ATTACK_GUID));
+        log.info("URL of Gremlin Attack report: {}", getGremlinAttackReportUrl(ctx, appUrl));
     }
 
     public void processKiller(Context ctx, String apiUrl, String appUrl) {
@@ -109,7 +113,7 @@ public class StateAttacks {
         boolean exact = getBoolean(ctx, ATTACK_PROCESS_KILLER_EXACT, false);
         boolean killChildren = getBoolean(ctx, ATTACK_PROCESS_KILLER_KILLCHILDREN, false);
         boolean fullMatch = getBoolean(ctx, ATTACK_PROCESS_KILLER_FULLMATCH, false);
-        String targetType = getString(ctx, ATTACK_TARGET_TYPE, "Exact");
+        String targetType = getString(ctx, ATTACK_TARGET_TYPE, EXACT);
 
         List<String> args = new ArrayList<>(Arrays.asList("-l", Integer.toString(length), "-i", Integer.toString(interval), "-p", process));
 
@@ -149,6 +153,6 @@ public class StateAttacks {
         String attackGuid = creatAttack(ctx, objAttack, objArgs, targetType, apiUrl);
         String attackDetails = getAttackDetails(ctx, apiUrl, attackGuid);
         ctx.setVariable(ATTACK_DETAILS, attackDetails);
-        log.info("URL of Gremlin Attack report: " + appUrl + ctx.getVariable(ATTACK_GUID));
+        log.info("URL of Gremlin Attack report: {}", getGremlinAttackReportUrl(ctx, appUrl));
     }
 }

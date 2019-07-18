@@ -216,7 +216,7 @@ public class TaurusTask implements Task {
     private static Path processConfig(Path workDir, Object v) throws IOException {
         if (v instanceof String) {
             Path p = workDir.resolve((String) v);
-            if (!Files.exists(p)) {
+            if (!p.toFile().exists()) {
                 throw new IllegalArgumentException("'" + CONFIGS_KEY + "' file not found: " + v);
             }
             return p;
