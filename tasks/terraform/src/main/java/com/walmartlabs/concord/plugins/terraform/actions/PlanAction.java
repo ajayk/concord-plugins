@@ -107,7 +107,7 @@ public class PlanAction extends Action {
         Path attachmentsDir = workDir.resolve(com.walmartlabs.concord.sdk.Constants.Files.JOB_ATTACHMENTS_DIR_NAME);
 
         Path dst = attachmentsDir.resolve("terraform");
-        if (!Files.exists(dst)) {
+        if (!dst.toFile().exists()) {
             Files.createDirectories(dst);
         }
 

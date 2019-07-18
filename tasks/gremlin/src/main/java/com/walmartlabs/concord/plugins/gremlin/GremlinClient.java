@@ -32,7 +32,6 @@ import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.security.cert.CertificateException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -198,11 +197,13 @@ public class GremlinClient {
                 final TrustManager[] trustAllCerts = new TrustManager[]{
                         new X509TrustManager() {
                             @Override
-                            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                                //NO-OP
                             }
 
                             @Override
-                            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)  {
+                                //NO-OP
                             }
 
                             @Override

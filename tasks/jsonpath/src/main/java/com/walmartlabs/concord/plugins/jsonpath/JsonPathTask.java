@@ -78,18 +78,15 @@ public class JsonPathTask implements Task {
         Object result;
 
         switch (action) {
-            case READ: {
+            case READ:
                 result = read(src, jsonPath);
                 break;
-            }
-            case READFILE: {
+            case READFILE:
                 result = readFile(ctx, src, jsonPath);
                 break;
-            }
-            case READJSON: {
+            case READJSON:
                 result = readJson((String) src, jsonPath);
                 break;
-            }
             default:
                 throw new IllegalArgumentException("Unsupported action: " + action);
         }

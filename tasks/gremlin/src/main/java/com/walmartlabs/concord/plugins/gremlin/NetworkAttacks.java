@@ -50,6 +50,7 @@ public class NetworkAttacks {
     private static final String ATTACK_LENGTH = "length";
     private static final String ATTACK_GUID = "attackGuid";
     private static final String ATTACK_DETAILS = "attackDetails";
+    private static final String EXACT = "Exact";
 
     public void blackhole(Context ctx, String apiUrl, String appUrl) {
         int length = assertInt(ctx, ATTACK_LENGTH);
@@ -59,7 +60,7 @@ public class NetworkAttacks {
         String egressPorts = getString(ctx, ATTACK_EGRESS_PORTS, null);
         String ingressPorts = getString(ctx, ATTACK_INGRESS_PORTS, null);
         String protocol = getString(ctx, ATTACK_PROTOCOL, null);
-        String targetType = getString(ctx, ATTACK_TARGET_TYPE, "Exact");
+        String targetType = getString(ctx, ATTACK_TARGET_TYPE, EXACT);
 
         List<String> args = new ArrayList<>(Arrays.asList("-l", Integer.toString(length), "-i", ipAddresses));
 
@@ -108,7 +109,7 @@ public class NetworkAttacks {
         String ipAddresses = assertString(ctx, ATTACK_IP_ADDRESSES);
         String device = getString(ctx, ATTACK_DEVICE, null);
         String protocol = getString(ctx, ATTACK_PROTOCOL, null);
-        String targetType = getString(ctx, ATTACK_TARGET_TYPE, "Exact");
+        String targetType = getString(ctx, ATTACK_TARGET_TYPE, EXACT);
 
         List<String> args = new ArrayList<>(Arrays.asList("-l", Integer.toString(length), "-i", ipAddresses));
 
@@ -146,7 +147,7 @@ public class NetworkAttacks {
         String sourcePorts = getString(ctx, ATTACK_SOURCE_PORTS, null);
         int delay = getInt(ctx, ATTACK_LATENCY_DELAY, 10);
         String protocol = getString(ctx, ATTACK_PROTOCOL, null);
-        String targetType = getString(ctx, ATTACK_TARGET_TYPE, "Exact");
+        String targetType = getString(ctx, ATTACK_TARGET_TYPE, EXACT);
 
         List<String> args = new ArrayList<>(Arrays.asList("-l", Integer.toString(length), "-i", ipAddresses, "-m", Integer.toString(delay)));
 
@@ -200,7 +201,7 @@ public class NetworkAttacks {
         int percent = getInt(ctx, ATTACK_PACKET_LOSS_PERCENT, 1);
         String protocol = getString(ctx, ATTACK_PROTOCOL, null);
         boolean corrupt = getBoolean(ctx, ATTACK_PACKET_LOSS_CORRUPT, false);
-        String targetType = getString(ctx, ATTACK_TARGET_TYPE, "Exact");
+        String targetType = getString(ctx, ATTACK_TARGET_TYPE, EXACT);
 
         List<String> args = new ArrayList<>(Arrays.asList("-l", Integer.toString(length), "-i", ipAddresses, "-r", Integer.toString(percent)));
 

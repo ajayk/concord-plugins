@@ -163,7 +163,7 @@ public class GitTask implements Task {
                 return;
             }
 
-            log.info("Changes detected in the following files: " + status.getUncommittedChanges());
+            log.info("Changes detected in the following files: {} ",  status.getUncommittedChanges());
             CommitCommand commitCommand = git.commit()
                     .setMessage(commitMessage)
                     .setCommitter(committerUId, committerEmail);
@@ -366,14 +366,14 @@ public class GitTask implements Task {
         if (s == null) {
             String url = assertString(ctx, GIT_URL);
 
-            final int slashIndex = url.lastIndexOf("/");
+            final int slashIndex = url.lastIndexOf('/');
             final int dotGitIndex = url.lastIndexOf(".git");
             s = url.substring(slashIndex + 1, (dotGitIndex > slashIndex + 1 ? dotGitIndex : url.length() - 1));
         }
 
         String workDir = (String) ctx.getVariable(Constants.Context.WORK_DIR_KEY);
         Path p = Paths.get(workDir, s);
-        if (!Files.exists(p)) {
+        if (!p.toFile().exists()) {
             try {
                 Files.createDirectories(p);
             } catch (IOException e) {
@@ -455,12 +455,12 @@ public class GitTask implements Task {
     private static Map<String, String> getBasicAuthorization(Context ctx) {
         Map<String, Object> authMap = (Map<String, Object>) ctx.getVariable(GIT_AUTH_KEY);
         if (authMap == null) {
-            return Collections.EMPTY_MAP;
+            return Collections.emptyMap();
         }
 
         Map<String, String> credentials = (Map<String, String>) authMap.get(GIT_BASIC_KEY);
         if (credentials == null) {
-            return Collections.EMPTY_MAP;
+            return Collections.emptyMap();
         }
 
         String usernameOrToken;
@@ -557,7 +557,7 @@ public class GitTask implements Task {
         try {
             IOUtils.deleteRecursively(dstDir);
         } catch (Exception ex) {
-            log.info("cleanup -> error: " + ex.getMessage());
+            log.info("cleanup -> error: {} " , ex.getMessage());
         }
 
         if (!isIgnoreErrors(ctx)) {

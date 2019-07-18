@@ -8,7 +8,7 @@ flows:
         length: 15 #The length of the attack (seconds)
         targetType: Exact
         targetList: ["client1", "client2"]
-    - log: "Gremling Attack Guid: ${attackGuid}" #The output (gremlin attack guid) is stored ${attackGuid}
+    - log: "Gremlin Attack Guid: ${attackGuid}" #The output (gremlin attack guid) is stored ${attackGuid}
     - call: sendSlackComm #Send Gremlin Report Url to Slack channel.
       in:
         attackType: "CPU"

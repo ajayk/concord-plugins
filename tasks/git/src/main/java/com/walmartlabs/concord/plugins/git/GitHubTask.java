@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walmartlabs.concord.sdk.Context;
 import com.walmartlabs.concord.sdk.InjectVariable;
 import com.walmartlabs.concord.sdk.Task;
+import jdk.internal.joptsimple.internal.Strings;
 import org.eclipse.egit.github.core.*;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.*;
@@ -459,7 +460,7 @@ public class GitHubTask implements Task {
 
             //Fork a Git Repo
             RepositoryService repoService = new RepositoryService(client);
-            if (targetOrg != null && !targetOrg.isEmpty()) {
+            if (!Strings.isNullOrEmpty(targetOrg)) {
                 log.info("Forking '{}/{}' into '{}' org...", gitHubOrgName, gitHubRepoName, targetOrg);
                 repoService.forkRepository(repo, targetOrg);
                 log.info("Fork action completed");
@@ -469,7 +470,7 @@ public class GitHubTask implements Task {
                 log.info("Fork action completed");
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error occured during fork: " + e.getMessage());
+            throw new RuntimeException("Error occurred during fork: " + e.getMessage());
         }
     }
 

@@ -144,17 +144,20 @@ public class Taurus {
             throw new IllegalStateException("'" + url + "' not found. Check the dependencies");
         }
 
+
         try (InputStream in = url.openStream()) {
             // TODO replace with IOUtils#unzip(in, dst, true) when available
             Path tmp = Files.createTempFile(workDir, "file", ".zip");
             Files.copy(in, tmp, StandardCopyOption.REPLACE_EXISTING);
             IOUtils.unzip(tmp, dst, true);
         }
+
+
     }
 
     private static String fileName(URL url) {
         String s = url.getFile();
-        int i = s.lastIndexOf("/");
+        int i = s.lastIndexOf('/');
         if (i < 0 || i + 1 >= s.length()) {
             return s;
         }
